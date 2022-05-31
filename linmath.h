@@ -558,9 +558,9 @@ LINMATH_H_FUNC void quat_from_mat4x4(quat q, mat4x4 M)
 	for (i = 0; i < 3; i++)
 	{
 		float m = M[i][i];
-		if (m < r)
+		if (m <= r)
 			continue;
-		m = r;
+		r = m;
 		p = &perm[i];
 	}
 
@@ -568,15 +568,15 @@ LINMATH_H_FUNC void quat_from_mat4x4(quat q, mat4x4 M)
 
 	if (r < 1e-6)
 	{
-		q[0] = 1.f;
-		q[1] = q[2] = q[3] = 0.f;
+		q[3] = 1.f;
+		q[0] = q[1] = q[2] = 0.f;
 		return;
 	}
 
-	q[0] = r / 2.f;
-	q[1] = (M[p[0]][p[1]] - M[p[1]][p[0]]) / (2.f * r);
-	q[2] = (M[p[2]][p[0]] - M[p[0]][p[2]]) / (2.f * r);
-	q[3] = (M[p[2]][p[1]] - M[p[1]][p[2]]) / (2.f * r);
+	q[0] = (M[p[0]][p[1]] - M[p[1]][p[0]]) / (2.f * r);
+	q[1] = (M[p[2]][p[0]] - M[p[0]][p[2]]) / (2.f * r);
+	q[2] = (M[p[2]][p[1]] - M[p[1]][p[2]]) / (2.f * r);
+	q[3] = r / 2.f;
 }
 
 LINMATH_H_FUNC void mat4x4_arcball(mat4x4 R, mat4x4 M, vec2 _a, vec2 _b, float s)
