@@ -2,7 +2,8 @@
 
 #include "linmath_test.h"
 
-int main() {
+int main()
+{
     linmath_test_run_all();
     printf("linmath tests passed\n");
     return 0;
